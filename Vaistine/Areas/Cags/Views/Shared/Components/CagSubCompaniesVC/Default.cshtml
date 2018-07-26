@@ -1,0 +1,34 @@
+﻿@using Kendo.Mvc.UI
+@model List<Cag>
+@{
+    Guid parentId = ViewBag.CagId;
+}
+
+@(Html.Kendo().Grid<Cag>()
+      .Name("subcompanies_grid")
+      .ColumnMenu(true)
+      .Resizable(r=>r.Columns(true))
+      .Reorderable(r=>r.Columns(true))
+      .Pageable().Filterable().Sortable()
+      .Columns(c =>
+      {
+          c.Bound(x => x.Descr).Title("Название");
+
+          c.Command(cmd =>
+          {
+              cmd.Edit().Text(" ");
+              cmd.Destroy().Text(" ").HtmlAttributes(new {style = "color:red"});
+          }).Width(200);
+      })
+
+      .DataSource(ds => ds.Ajax()
+          .ServerOperation(true)
+          .Model(m =>
+          {
+              m.Id(x => x.Id);
+          })
+          .Read(r => r.Action("GetChildItems", "Cags", new { area="Cags", parentId = parentId}))
+          .Update(u => u.Action("Update", "Cags", new { area = "Cags" }))
+          .Destroy(d => d.Action("Destroy", "Cags", new { area = "Cags" }))
+          .Create(c => c.Action("Create", "Cags", new { area = "Cags" })))
+      )

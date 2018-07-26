@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>aspnet-Vaistine-FAA885CE-9768-4FB5-8614-B7CE67CF8848</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" PrivateAssets="All" />
+    <PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2018.2.516" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Docs\ViewComponents\" />
+    <Folder Include="Areas\Docs\Views\Docs\" />
+    <Folder Include="Areas\Docs\Views\Shared\Components\" />
+    <Folder Include="Areas\Goods\ViewComponents\" />
+    <Folder Include="Areas\Goods\Views\Shared\Components\" />
+    <Folder Include="Areas\Money\Controllers\" />
+    <Folder Include="Areas\Money\Models\" />
+    <Folder Include="Areas\Money\ViewComponents\" />
+    <Folder Include="Areas\Money\Views\Money\" />
+    <Folder Include="Areas\Money\Views\Shared\Components\" />
+  </ItemGroup>
+
+</Project>

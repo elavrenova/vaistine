@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Vaistine</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="https://kendo.cdn.telerik.com/2018.2.516/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://kendo.cdn.telerik.com/2018.2.516/styles/kendo.mobile.all.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://kendo.cdn.telerik.com/2018.2.516/styles/kendo.blueopal.min.css" rel="stylesheet" type="text/css" />
+    @*<link href="https://kendo.cdn.telerik.com/2018.2.516/styles/kendo.blueopal.min.css" rel="stylesheet" type="text/css" />*@
+    <link href="~/lib/components-font-awesome/css/fontawesome-all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.2.516/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.2.516/js/kendo.all.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.2.516/js/kendo.aspnetmvc.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.2.516/js/cultures/kendo.culture.ru-RU.min.js"></script>
+
+    <script type="text/javascript">
+        //set culture of the Kendo UI
+        kendo.culture("ru-RU");
+    </script>
+
+
+</head>
+<body>
+<nav class="navbar  navbar-expand-md fixed-top bg-light navbar-light">
+    <div class="container">
+        <div class="navbar-brand">
+            <a asp-area="" asp-controller="Home" asp-action="Index">
+                <i class="text-light fa fa-home"></i>
+            </a>
+
+        </div>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" asp-area="Stores" asp-controller="Stores" asp-action="Index">Склады</a></li>
+                <li class="nav-item"><a class="nav-link" asp-area="Cags" asp-controller="Cags" asp-action="Index">Контрагенты</a></li>
+                <li class="nav-item"><a class="nav-link" asp-area="Goods" asp-controller="Goods" asp-action="Index">Товары</a></li>
+            </ul>
+            @await Html.PartialAsync("_LoginPartial")
+        </div>
+
+
+    </div>
+</nav>
+
+    <partial name="_CookieConsentPartial" />
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2018 - Vaistine</p>
+        </footer>
+    </div>
+
+    
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

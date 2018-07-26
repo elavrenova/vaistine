@@ -1,0 +1,76 @@
+﻿@using Kendo.Mvc.UI
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h3> Единицы измерения </h3>
+<div>
+    @(Html.Kendo().Grid<UnitViewModel>()
+          .Name("grid")
+          .ColumnMenu(true)
+          .ToolBar(tb => tb.Create())
+          //.Editable(ed =>
+          //{
+          //    ed.Mode(GridEditMode.PopUp);
+          //    ed.TemplateName("Au");
+          //})
+          .Resizable(r => r.Columns(true))
+          .Reorderable(r => r.Columns(true))
+          .Pageable().Filterable().Sortable()
+          .Columns(c =>
+          {
+              c.Bound(x => x.Descr)
+                  .Title("Название")
+                  .ClientTemplate("<a href='" + Url.Action("Details", "Units", new { area = "Units" }) + "?id=#=Id#'" + ">#=Descr#</a>")
+                  ;
+              c.Bound(x=>x.ShortDescr)
+                  .Title("Краткое название")
+                  .ClientTemplate("<a href='" + Url.Action("Details", "Units", new { area = "Units" }) + "?id=#=Id#'" + ">#=Descr#</a>")
+                  ;
+              c.ForeignKey(x => x.BaseUnitId, (System.Collections.IEnumerable)ViewData["baseunitid"], "Id", "Descr")
+                  .Title("Базовая единица")
+                  .ClientTemplate("<a href='" + Url.Action("Details", "Units", new { area = "Goods" }) + "?id=#=BaseUnitId#'" + ">#=getTextByValue(data)#</a>");
+
+              c.Command(cmd =>
+              {
+                  cmd.Edit().Text(" ");
+                  cmd.Destroy().Text(" ").HtmlAttributes(new { style = "color:red" });
+              }).Width(200);
+          })
+
+          .DataSource(ds => ds.Ajax()
+              //.ServerOperation(true)
+              .Model(m =>
+              {
+                  m.Id(x => x.Id);
+                  m.Field(x => x.Id).DefaultValue(Guid.NewGuid());
+              })
+              .Read(r => r.Action("GetUnits", "Kendo", new { area = "" }))
+              .Update(u => u.Action("UpdateUnit", "Kendo", new { area = "" }))
+              .Destroy(d => d.Action("DestroyUnit", "Kendo", new { area = "" }))
+              .Create(c => c.Action("CreateUnit", "Kendo", new { area = "" })))
+          )
+</div>
+
+<script>
+    var collection;
+    //get's the text by value
+    function getTextByValue(data) {
+        var grid = $("#grid").data("kendoGrid");
+        // В случае вложенных таблиц используется селектор класса заданного в описании таблицы .HtmlAttributes(new { class = "zzz" })
+        //change the index of the column with your index
+        var valuesCollection = grid.options.columns[2].values;
+        //if the collection is empty - get it from the grid
+        if (!collection) {
+            collection = {};
+            //Set the correct FKColumn index!
+            for (var value in valuesCollection) {
+                collection[valuesCollection[value].value] = valuesCollection[value].text;
+            }
+        }
+        if (typeof (collection[data.BaseUnitId]) != "undefined") return collection[data.BaseUnitId];
+        return "";
+    }
+</script>
+
